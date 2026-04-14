@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { CircleDot, BookOpen, Plane, Wrench } from 'lucide-react';
-import { hobbiesData } from '../data/mock';
+// Props: hobbiesData passed from parent
 
 const iconMap = {
   CircleDot,
@@ -10,7 +10,7 @@ const iconMap = {
   Wrench
 };
 
-const Hobbies = () => {
+const Hobbies = ({ hobbiesData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 

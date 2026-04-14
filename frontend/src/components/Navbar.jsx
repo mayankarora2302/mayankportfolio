@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Shield } from 'lucide-react';
-import { navLinks, personalInfo } from '../data/mock';
+// Props: navLinks, personalInfo passed from parent
 
-const Navbar = () => {
+const Navbar = ({ navLinks = [], personalInfo = {} }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');

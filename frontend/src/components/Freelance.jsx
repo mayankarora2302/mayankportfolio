@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ExternalLink, Instagram, Dice5, Music, CircleDot, QrCode } from 'lucide-react';
-import { freelanceData } from '../data/mock';
+// Props: freelanceData passed from parent
 
 const iconMap = {
   Dice5: Dice5,
@@ -10,7 +10,7 @@ const iconMap = {
   QrCode: QrCode
 };
 
-const Freelance = () => {
+const Freelance = ({ freelanceData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 

@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ExternalLink, TrendingUp, RefreshCw } from 'lucide-react';
-import { dsaData } from '../data/mock';
+// Props: dsaData passed from parent
 
-const DSA = () => {
+const DSA = ({ dsaData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ExternalLink, Award, Terminal } from 'lucide-react';
-import { labsData } from '../data/mock';
+// Props: labsData passed from parent
 
 const LabEntry = ({ entry, index }) => {
   const ref = useRef(null);
@@ -81,7 +81,7 @@ const LabEntry = ({ entry, index }) => {
   );
 };
 
-const Labs = () => {
+const Labs = ({ labsData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 

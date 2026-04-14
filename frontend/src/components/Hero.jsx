@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 import { Github, Linkedin, Instagram, Mail, ArrowDown, Download, Eye } from 'lucide-react';
-import { personalInfo } from '../data/mock';
+// Props: personalInfo passed from parent
 
-const Hero = () => {
+const Hero = ({ personalInfo = {} }) => {
   const [engineReady, setEngineReady] = React.useState(false);
 
   useEffect(() => {

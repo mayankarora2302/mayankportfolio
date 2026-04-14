@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Shield, Code2 } from 'lucide-react';
-import { skillsData } from '../data/mock';
+// Props: skillsData passed from parent
 
 const SkillPill = ({ skill, index }) => (
   <motion.span
@@ -15,7 +15,7 @@ const SkillPill = ({ skill, index }) => (
   </motion.span>
 );
 
-const Skills = () => {
+const Skills = ({ skillsData = {} }) => {
   const [activeTab, setActiveTab] = useState('security');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });

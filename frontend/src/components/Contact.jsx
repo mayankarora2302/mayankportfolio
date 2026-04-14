@@ -1,15 +1,40 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, Phone, Github, Linkedin, Instagram, ArrowRight } from 'lucide-react';
-import { contactData } from '../data/mock';
+import { Mail, Phone, Github, Linkedin, Instagram, ArrowRight, Send, CheckCircle, Loader2 } from 'lucide-react';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const iconMap = {
   Mail, Phone, Github, Linkedin, Instagram
 };
 
-const Contact = () => {
+const Contact = ({ contactData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const { submitContact } = usePortfolio();
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    setSending(true);
+    setError('');
+    try {
+      await submitContact(form);
+      setSent(true);
+      setForm({ name: '', email: '', message: '' });
+      setTimeout(() => setSent(false), 5000);
+    } catch (err) {
+      setError('Failed to send message. Try emailing directly.');
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-24 lg:py-32" style={{ background: '#0F1525' }}>
@@ -35,13 +60,13 @@ const Contact = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left — Copy + CTA */}
+          {/* Left — Copy + Contact Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {contactData.copy.split('\n\n').map((para, i) => (
+            {contactData.copy && contactData.copy.split('\n\n').map((para, i) => (
               <p
                 key={i}
                 className="text-[#8B93B0] leading-relaxed mb-5 text-base"
@@ -51,14 +76,67 @@ const Contact = () => {
               </p>
             ))}
 
-            <a
-              href={contactData.ctaEmail}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#7B5EEA] to-[#3B6FD4] text-white font-medium hover:shadow-[0_0_30px_rgba(123,94,234,0.3)] transition-all duration-300 hover:-translate-y-1 mt-4"
-              style={{ fontFamily: 'Inter, sans-serif' }}
-            >
-              Send me an email
-              <ArrowRight className="w-4 h-4" />
-            </a>
+            {/* Contact Form */}
+            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full px-4 py-3 rounded-lg bg-[#161D35]/60 border border-[#1E2845] text-[#F0F4FF] text-sm placeholder-[#4A5270] focus:outline-none focus:border-[#7B5EEA]/50 focus:ring-1 focus:ring-[#7B5EEA]/20 transition-all"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full px-4 py-3 rounded-lg bg-[#161D35]/60 border border-[#1E2845] text-[#F0F4FF] text-sm placeholder-[#4A5270] focus:outline-none focus:border-[#7B5EEA]/50 focus:ring-1 focus:ring-[#7B5EEA]/20 transition-all"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                />
+              </div>
+              <div>
+                <textarea
+                  placeholder="Your Message"
+                  rows={4}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="w-full px-4 py-3 rounded-lg bg-[#161D35]/60 border border-[#1E2845] text-[#F0F4FF] text-sm placeholder-[#4A5270] focus:outline-none focus:border-[#7B5EEA]/50 focus:ring-1 focus:ring-[#7B5EEA]/20 transition-all resize-none"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                />
+              </div>
+
+              {error && (
+                <p className="text-red-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>{error}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={sending}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#7B5EEA] to-[#3B6FD4] text-white font-medium hover:shadow-[0_0_30px_rgba(123,94,234,0.3)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                {sending ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : sent ? (
+                  <>
+                    <CheckCircle className="w-4 h-4" />
+                    Message Sent!
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Send Message
+                  </>
+                )}
+              </button>
+            </form>
           </motion.div>
 
           {/* Right — Contact cards */}
@@ -68,7 +146,7 @@ const Contact = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-3"
           >
-            {contactData.contacts.map((c, i) => {
+            {contactData.contacts && contactData.contacts.map((c, i) => {
               const IconComp = iconMap[c.icon] || Mail;
               return (
                 <a

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Trophy, CheckCircle, Shield, GraduationCap } from 'lucide-react';
-import { timelineData } from '../data/mock';
+// Props: timelineData passed from parent
 
 const iconMap = {
   Trophy,
@@ -10,7 +10,7 @@ const iconMap = {
   GraduationCap
 };
 
-const Timeline = () => {
+const Timeline = ({ timelineData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 

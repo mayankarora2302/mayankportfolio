@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Download, Linkedin, Trophy, Wrench, ChevronDown, ChevronUp } from 'lucide-react';
-import { projectsData } from '../data/mock';
+// Props: projectsData passed from parent
 
 const ProjectCard = ({ project, index }) => {
   const ref = useRef(null);
@@ -158,7 +158,7 @@ const ProjectCard = ({ project, index }) => {
   );
 };
 
-const Projects = () => {
+const Projects = ({ projectsData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 

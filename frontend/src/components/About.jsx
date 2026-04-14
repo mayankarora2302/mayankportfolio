@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { aboutContent } from '../data/mock';
+// Props: aboutContent passed from parent
 
 const TypingText = ({ text, delay = 0, speed = 30, onDone }) => {
   const [displayed, setDisplayed] = useState('');
@@ -24,7 +24,7 @@ const TypingText = ({ text, delay = 0, speed = 30, onDone }) => {
   return <span>{displayed}</span>;
 };
 
-const TerminalCard = () => {
+const TerminalCard = ({ aboutContent }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [currentCmd, setCurrentCmd] = useState(0);
@@ -103,7 +103,7 @@ const TerminalCard = () => {
   );
 };
 
-const About = () => {
+const About = ({ aboutContent = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
@@ -143,7 +143,7 @@ const About = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <TerminalCard />
+            <TerminalCard aboutContent={aboutContent} />
           </motion.div>
         </div>
       </div>
