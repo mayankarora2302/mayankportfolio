@@ -1,0 +1,55 @@
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hide default cursor on non-touch */
+@media (hover: hover) {
+    * {
+        cursor: none !important;
+    }
+}
+
+/* Selection color */
+::selection {
+    background: rgba(123, 94, 234, 0.3);
+    color: #F0F4FF;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080C18;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1E2845;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7B5EEA;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
