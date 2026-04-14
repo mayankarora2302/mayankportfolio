@@ -6,7 +6,7 @@ export const personalInfo = {
   tagline: "I build things that work, break things to learn, and ship things that matter.",
   description: "2nd Year B.Tech IT \u2022 Cybersecurity (Red Team) \u2022 ML Builder \u2022 Full-Stack Developer \u2022 New Delhi, India",
   badge: "Open to Internships & Freelance",
-  photo: "https://images.unsplash.com/photo-1584940120505-117038d90b05?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHw0fHxJbmRpYW4lMjBtYWxlJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzc2MTUxNDEwfDA&ixlib=rb-4.1.0&q=85",
+  photo: "https://customer-assets.emergentagent.com/job_playboy-console/artifacts/8k6hbkew_MayankPhoto.jpeg",
   photoBadge: "TryHackMe \u2014 106 Rooms \u2713",
   resumeUrl: "https://customer-assets.emergentagent.com/job_f31ad329-4849-4720-a320-110878309b7a/artifacts/wa9ewhfh_MayankAroraResume.pdf",
   socials: {
