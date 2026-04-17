@@ -22,7 +22,7 @@ const Navbar = ({ navLinks = [], personalInfo = {} }) => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navLinks]);
 
   const handleClick = (e, href) => {
     e.preventDefault();
