@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, Phone, Github, Linkedin, Instagram, ArrowRight, Send, CheckCircle, Loader2 } from 'lucide-react';
-import { usePortfolio } from '../context/PortfolioContext';
+import { Mail, Phone, Github, Linkedin, Instagram, Send, CheckCircle } from 'lucide-react';
 
 const iconMap = {
   Mail, Phone, Github, Linkedin, Instagram
@@ -10,30 +9,20 @@ const iconMap = {
 const Contact = ({ contactData = {} }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const { submitContact } = usePortfolio();
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
-      setError('Please fill in all fields.');
-      return;
-    }
-    setSending(true);
-    setError('');
-    try {
-      await submitContact(form);
-      setSent(true);
-      setForm({ name: '', email: '', message: '' });
-      setTimeout(() => setSent(false), 5000);
-    } catch (err) {
-      setError('Failed to send message. Try emailing directly.');
-    } finally {
-      setSending(false);
-    }
+    if (!form.name || !form.email || !form.message) return;
+
+    const subject = encodeURIComponent(`Portfolio Contact from ${form.name}`);
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
+    window.open(`mailto:mayankarora2302@gmail.com?subject=${subject}&body=${body}`, '_self');
+
+    setSent(true);
+    setForm({ name: '', email: '', message: '' });
+    setTimeout(() => setSent(false), 4000);
   };
 
   return (
@@ -109,25 +98,15 @@ const Contact = ({ contactData = {} }) => {
                 />
               </div>
 
-              {error && (
-                <p className="text-red-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>{error}</p>
-              )}
-
               <button
                 type="submit"
-                disabled={sending}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#7B5EEA] to-[#3B6FD4] text-white font-medium hover:shadow-[0_0_30px_rgba(123,94,234,0.3)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#7B5EEA] to-[#3B6FD4] text-white font-medium hover:shadow-[0_0_30px_rgba(123,94,234,0.3)] transition-all duration-300 hover:-translate-y-1"
                 style={{ fontFamily: 'Inter, sans-serif' }}
               >
-                {sending ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : sent ? (
+                {sent ? (
                   <>
                     <CheckCircle className="w-4 h-4" />
-                    Message Sent!
+                    Opening Mail Client...
                   </>
                 ) : (
                   <>
